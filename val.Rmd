@@ -3,6 +3,8 @@ title: "Untitled"
 author: "hanfu shi"
 date: "2021/10/5"
 output: html_document
+editor_options: 
+  chunk_output_type: inline
 ---
 ```{r}
 library(tidyverse)
@@ -186,3 +188,23 @@ weather_df%>%
 
 
 
+```{r}
+plot1 =
+weather_df%>%
+  ggplot(aes(x = tmin, y =tmax, color =name))+
+  geom_point(alpha = 0.5)
+
+ggsave("./result/weather_plot.pdf", plot1, width =8, height =5)
+
+
+```
+
+
+what about embedding...
+```{r fig.width=12, fig.height=6}
+plot1
+```
+
+```{r fig.width=6, fig.height=3}
+plot1
+```

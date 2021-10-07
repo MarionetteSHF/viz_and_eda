@@ -57,7 +57,87 @@ weather_df%>%
 ```
 
 
+## Scales
+
+Start with the same plot
+```{r}
+weather_df%>%
+  ggplot(aes(x = tmin, y=tmax, color = name))+
+  geom_point(alpha = 0.5)+
+  labs(title = "Temperature plot",
+       x =  "minimum daily temperature",
+       y = "Maximum daily temperature(c)",
+       caption = "Data from rnooo package; temperature in 2017.")+
+  scale_x_continuous(
+    breaks = c(-15, 0 ,15),
+    labels = c("-15C","0","15")
+  )+
+  scale_y_continuous(
+   # trans = "sqrt",  or "log"
+    position = "right" #change lable side
+  )
+
+
+```
+
+
+look at color scales
+```{r}
+weather_df%>%
+  ggplot(aes(x = tmin, y=tmax, color = name))+
+  geom_point(alpha = 0.5)+
+  labs(title = "Temperature plot",
+       x =  "minimum daily temperature",
+       y = "Maximum daily temperature(c)",
+       caption = "Data from rnooo package; temperature in 2017.")+
+  scale_x_continuous(
+    breaks = c(-15, 0 ,15),
+    labels = c("-15C","0","15")
+  )+
+  scale_color_hue(
+    h = c(100, 300), 
+    name = "Location"
+    )#change name of label
+
+```
+
+```{r}
+weather_df%>%
+  ggplot(aes(x = tmin, y=tmax, color = name))+
+  geom_point(alpha = 0.7)+
+  labs(title = "Temperature plot",
+       x =  "minimum daily temperature",
+       y = "Maximum daily temperature(c)",
+       caption = "Data from rnooo package; temperature in 2017.")+
+  scale_x_continuous(
+    breaks = c(-15, 0 ,15),
+    labels = c("-15C","0","15"))+
+  
+  viridis::scale_color_viridis(
+    name ="locations",
+    discrete = T
+  )
+#use viridis
+```
 
 
 
+```{r}
+weather_df%>%
+  ggplot(aes(x = tmin, y=tmax, color = name))+
+  geom_point(alpha = 0.5)+
+  labs(title = "Temperature plot",
+       x =  "minimum daily temperature",
+       y = "Maximum daily temperature(c)",
+       caption = "Data from rnooo package; temperature in 2017.")+
+  scale_x_continuous(
+    breaks = c(-15, 0 ,15),
+    labels = c("-15C","0","15"))+
+  
+  viridis::scale_color_viridis(
+    name ="locations",
+    discrete = T
+  )
+
+```
 

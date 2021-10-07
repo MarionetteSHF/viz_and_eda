@@ -203,6 +203,103 @@ ggplot(data = waikiki, aes(x= date, y = tmax, color= name))+
 
 ```
 
+##pathwork
+```{r}
+weather_df %>%
+  ggplot(aes(x = tmin, color = name))+
+  geom_density(alpha = .8)+
+  facet_grid(. ~ name)
+
+```
+
+
+what happens when you want multipanel plots but can not facet...?
+
+```{r}
+tmax_tmin_p=
+weather_df %>%
+  ggplot(aes(x = tmin, y = tmax, color = name))+
+  geom_point(alpha = 0.5)+
+  theme(legend.position="none")
+
+prcp_den =
+  weather_df%>%
+  filter(prcp>0)%>%
+  ggplot(aes(x = prcp, fill=name))+
+  geom_density(alpha =0.5)
+
+
+tmax_date_p =
+  weather_df%>%
+  ggplot(aes(x = date, y = tmax, color = name))+
+  geom_point()+
+  theme(legend.position = "none")
+tmax_date_p
+
+tmax_tmin_p+ prcp_den+tmax_date_p
+(tmax_tmin_p+ prcp_den)/tmax_date_p
+
+```
+
+## Data manipulation
+control your factor
+```{r}
+weather_df %>%
+  mutate(
+    name = factor(name),
+    name = forcats::fct_relevel(name, c("Waikiki_HA"))
+  )%>%
+  ggplot(aes(x = name, y =tmax, fill= name))+
+  geom_violin()
+
+```
+
+
+What if I wanted densities for tmin and tmax simultaneously?
+
+```{r}
+weather_df%>%
+  filter(name =="CentralPark_NY")%>%
+  pivot_longer(
+    tmax:tmin,
+    names_to = "Observation",
+    values_to = "temeratures"
+  )%>%
+  ggplot(aes(x = temeratures, fill= Observation))+
+  geom_density(alpha=0.5)
+
+```
+
+```{r}
+weather_df%>%
+  pivot_longer(
+    tmax:tmin,
+    names_to = "Observation",
+    values_to = "temeratures"
+  )%>%
+  ggplot(aes(x = temeratures, fill= Observation))+
+  geom_density(alpha=0.5)+
+  facet_grid(. ~ name)
+
+```
+
+
+quickKKKKKKKKKK example
+
+```{r}
+
+
+
+```
+
+
+
+
+
+
+
+
+
 
 
 

@@ -3,6 +3,8 @@ title: "Visualization part III exploratory analysis"
 author: "hanfu shi"
 date: "2021/10/12"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 ##Setting options
 ```{r }
@@ -51,6 +53,58 @@ weather_df%>%
   group_by(name, month)
 
 ```
+
+
+##counting things
+count month/name observations
+```{r}
+weather_df %>%
+  group_by(name,month)%>%
+  summarize(n_obs = n())
+
+```
+
+
+we can use `count()`
+```{r}
+weather_df%>%
+ count(month, name, name="n_obs")
+
+```
+
+**NEVER** use base R's `table`
+```{r}
+weather_df%>%
+  pull(month)%>%
+  table()
+
+```
+
+other helpful counters
+```{r}
+
+weather_df %>%
+  group_by(month)%>%
+  summarize(
+    n_obs=n(),
+    n_days = n_distinct(date)
+  )
+  
+```
+
+
+
+```{r}
+
+
+
+```
+
+
+
+
+
+
 
 
 

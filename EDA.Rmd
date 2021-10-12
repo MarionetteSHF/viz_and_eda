@@ -179,13 +179,68 @@ group_by(name, month)%>%
 ```
 
 
+##group by and mutate
 ```{r}
+weather_df%>%
+  group_by(name)%>%
+  mutate(
+    mean_tmax= mean(tmax, na.rm = TRUE),#get different mean_tmax for differnt name
+    centered_tmax= tmax -mean_tmax
+    
+  )%>%
+  ggplot(aes(x= date, y = centered_tmax, color = name))+
+  geom_point()
 
+
+```
+
+what about window functions
+ranking
+```{r}
+weather_df%>%
+  group_by(name,month)%>%
+  mutate(temp_rank = min_rank(tmax))#get temperature  rank  min_rank(desc(tmax)) from top to bottom rank
+  #filter(temp_rank == 1)  #get coldest day for each name and month
+
+```
+
+
+lag
+```{r}
+weather_df%>%
+  group_by(name)%>%
+  mutate(lag_tem= lag(tmax))  #shift the row values by one row
 
 
 ```
 
 
+```{r}
+weather_df%>%
+  group_by(name)%>%
+  mutate(tem_change=tmax - lag(tmax))%>%#tem change
+  summarize(
+    tem_change_max = max(tem_change, na.rm = T),
+    temp_change_sd = sd(tem_change, na.rm = T)
+  )
+  
+
+```
+
+```{r}
+
+
+```
+
+
+```{r}
+
+```
+
+```{r}
+
+
+```
 
 
 
